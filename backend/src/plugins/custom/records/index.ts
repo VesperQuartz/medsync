@@ -1,4 +1,4 @@
-import { SaveRecord } from "@/application/use-case/records/add-record.js";
+import { SaveRecord } from "@/application/use-case/records/add-records.js";
 import { GetAllRecord } from "@/application/use-case/records/all-records.js";
 import { GetUserRecord } from "@/application/use-case/records/user-records.js";
 import { RecordRepositoryImpl } from "@/infrastructure/repositories/records.js";
