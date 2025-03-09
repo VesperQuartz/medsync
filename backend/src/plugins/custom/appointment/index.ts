@@ -1,3 +1,4 @@
+import { AllAppointemnt } from "@/application/use-case/appointment/all-appointment.js";
 import { BookAppointment } from "@/application/use-case/appointment/book-appointment.js";
 import { ShowStaffAppointment } from "@/application/use-case/appointment/show-appointment.js";
 import { ShowUserAppointment } from "@/application/use-case/appointment/user-appointment.js";
@@ -12,9 +13,11 @@ export default fp(
     const bookAppointment = new BookAppointment(appointment, staff);
     const showAppointment = new ShowStaffAppointment(appointment);
     const userAppointment = new ShowUserAppointment(appointment);
+    const allAppointment = new AllAppointemnt(appointment);
     fastify.decorate("BookAppointment", bookAppointment);
     fastify.decorate("ShowAppointment", showAppointment);
     fastify.decorate("UserAppointment", userAppointment);
+    fastify.decorate("AllAppointment", allAppointment);
   },
   {
     dependencies: ["database"],
@@ -26,5 +29,6 @@ declare module "fastify" {
     BookAppointment: BookAppointment;
     ShowAppointment: ShowStaffAppointment;
     UserAppointment: ShowUserAppointment;
+    AllAppointment: AllAppointemnt;
   }
 }

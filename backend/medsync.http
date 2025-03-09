@@ -3,11 +3,11 @@ POST {{BASE_URL}}/api/auth/register
 Content-Type: application/json
 
 {
-    "name": "Jane Doe",
+    "name": "Admin User",
     "dateOfBirth": "1990-01-01T00:00:00.000Z",
-    "password": "test123",
-    "role": "doctor",
-    "email": "lilbrown3000+staff1@gmail.com"
+    "password": "password",
+    "role": "admin",
+    "email": "lilbrown3000+admin@gmail.com"
 }
 
 ### Login a user
@@ -37,6 +37,10 @@ Content-Type: application/json
 
 ### Get all staff
 GET {{BASE_URL}}/api/staff
+Content-Type: application/json
+
+### Get all appointment
+GET {{BASE_URL}}/api/appointment
 Content-Type: application/json
 
 ### Book an appointment
