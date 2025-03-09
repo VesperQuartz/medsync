@@ -1,0 +1,25 @@
+{
+  "extends": "fastify-tsconfig",
+  "compilerOptions": {
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    },
+    "outDir": "dist",
+    "sourceMap": false,
+    "baseUrl": "./",
+    "moduleResolution": "NodeNext",
+    "module": "NodeNext",
+    "target": "ES2022",
+    "esModuleInterop": true
+  },
+  "tsc-alias": {
+    "verbose": false,
+    "resolveFullPaths": true
+  },
+  "include": [
+    "src/**/*.ts",
+    "src"
+  ]
+}

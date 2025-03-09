@@ -1,0 +1,1 @@
+ALTER TABLE `doctor_staff_details` ADD `available` integer DEFAULT 0 NOT NULL;

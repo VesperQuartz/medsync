@@ -1,0 +1,79 @@
+### Register a user
+POST {{BASE_URL}}/api/auth/register
+Content-Type: application/json
+
+{
+    "name": "Jane Doe",
+    "dateOfBirth": "1990-01-01T00:00:00.000Z",
+    "password": "test123",
+    "role": "doctor",
+    "email": "lilbrown3000+staff1@gmail.com"
+}
+
+### Login a user
+POST {{BASE_URL}}/api/auth/login
+Content-Type: application/json
+
+{
+    "password": "test123",
+    "email": "lilbrown3000+test3@gmail.com"
+}
+
+
+### Get all user
+
+GET {{BASE_URL}}/api/users
+Content-Type: application/json
+
+### Save staff
+POST {{BASE_URL}}/api/staff
+Content-Type: application/json
+
+{
+    "userId": 10,
+    "speciality": "Cardiologist",
+    "shift": "morning"
+}
+
+### Get all staff
+GET {{BASE_URL}}/api/staff
+Content-Type: application/json
+
+### Book an appointment
+POST {{BASE_URL}}/api/appointment
+Content-Type: application/json
+
+{
+    "patientId": 9,
+    "doctorId": 10,
+    "reason": "I have been feeling a pain in my back",
+    "duration": 60
+}
+
+
+### Get all users appointment
+GET {{BASE_URL}}/api/appointment/users/9
+Content-Type: application/json
+
+### Get all doctors appointment
+GET {{BASE_URL}}/api/appointment/10
+Content-Type: application/json
+
+### Book an appointment
+POST {{BASE_URL}}/api/payment
+Content-Type: application/json
+
+{
+    "appointmentId": 18,
+    "amount": 200,
+    "patientId": 10
+}
+
+
+### Get all payment
+GET {{BASE_URL}}/api/payment
+Content-Type: application/json
+
+### Get all user payment
+GET {{BASE_URL}}/api/payment/10
+Content-Type: application/json

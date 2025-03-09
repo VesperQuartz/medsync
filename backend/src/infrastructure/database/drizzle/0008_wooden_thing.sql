@@ -1,0 +1,1 @@
+ALTER TABLE `appointments` ADD `reason` text NOT NULL;

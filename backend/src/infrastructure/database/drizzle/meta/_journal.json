@@ -1,0 +1,90 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1741060363857,
+      "tag": "0000_productive_tusk",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1741060627942,
+      "tag": "0001_zippy_radioactive_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1741080220767,
+      "tag": "0002_violet_luckman",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1741080496211,
+      "tag": "0003_illegal_pandemic",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1741082707979,
+      "tag": "0004_curly_maginty",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1741142171819,
+      "tag": "0005_charming_pete_wisdom",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1741170039674,
+      "tag": "0006_bright_gorgon",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "6",
+      "when": 1741173932385,
+      "tag": "0007_uneven_sleepwalker",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "6",
+      "when": 1741314485607,
+      "tag": "0008_wooden_thing",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "6",
+      "when": 1741456203003,
+      "tag": "0009_natural_zarek",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "6",
+      "when": 1741472063756,
+      "tag": "0010_wide_ender_wiggin",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "6",
+      "when": 1741474558167,
+      "tag": "0011_lethal_dust",
+      "breakpoints": true
+    }
+  ]
+}

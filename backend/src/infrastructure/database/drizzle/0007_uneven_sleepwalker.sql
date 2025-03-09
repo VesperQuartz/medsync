@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX `doctor_staff_details_user_id_unique` ON `doctor_staff_details` (`user_id`);
