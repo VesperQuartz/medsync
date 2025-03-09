@@ -47,8 +47,8 @@ const app: FastifyPluginAsync<AppOptions> = async (
         },
         {
           url: "https://medsync-9a76abebef65.herokuapp.com",
-          description: "Production server
-        }
+          description: "Production server",
+        },
       ],
     },
     transform: jsonSchemaTransform,
