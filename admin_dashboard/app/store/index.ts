@@ -13,7 +13,7 @@ export type UserResponse = {
 };
 
 type UserStoreState = {
-  user: UserResponse;
+  user: UserResponse | undefined;
   setUser: ({
     id,
     name,
@@ -30,12 +30,12 @@ type UserStoreState = {
 export const useUserStore = create<UserStoreState>()(
   persist(
     (set) => ({
-      user: {} as UserResponse,
+      user: undefined,
       setUser: (user: UserResponse) =>
         set(() => ({
           user,
         })),
-      removeUser: () => set(() => ({ user: {} as UserResponse })),
+      removeUser: () => set(() => ({ user: undefined })),
     }),
     {
       name: "user",

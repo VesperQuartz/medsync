@@ -130,7 +130,7 @@ export function AppSidebar() {
                 <AvatarFallback>AD</AvatarFallback>
               </Avatar>
               <div className="flex flex-col items-start text-sm">
-                <span className="font-medium">{user.user.name}</span>
+                <span className="font-medium">{user.user?.name}</span>
                 <span className="text-xs text-muted-foreground">Admin</span>
               </div>
             </Button>

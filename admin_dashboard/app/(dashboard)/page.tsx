@@ -57,7 +57,7 @@ export default function DashboardPage() {
               Dashboard
             </h2>
             <p className="text-muted-foreground">
-              Welcome back, {user.user.name}
+              Welcome back, {user?.user?.name}
             </p>
           </div>
         </div>
