@@ -3,11 +3,11 @@ POST {{BASE_URL}}/api/auth/register
 Content-Type: application/json
 
 {
-    "name": "Admin User",
-    "dateOfBirth": "1990-01-01T00:00:00.000Z",
+    "name": "Super Admin",
+    "dateOfBirth": "1984-04-06T00:00:00.000Z",
     "password": "password",
     "role": "admin",
-    "email": "lilbrown3000+admin@gmail.com"
+    "email": "example+admin@gmail.com"
 }
 
 ### Login a user
@@ -21,8 +21,11 @@ Content-Type: application/json
 
 
 ### Get all user
-
 GET {{BASE_URL}}/api/users
+Content-Type: application/json
+
+### Get one user payment
+GET {{BASE_URL}}/api/users/13
 Content-Type: application/json
 
 ### Save staff
@@ -30,9 +33,9 @@ POST {{BASE_URL}}/api/staff
 Content-Type: application/json
 
 {
-    "userId": 10,
-    "speciality": "Cardiologist",
-    "shift": "morning"
+    "userId": 16,
+    "speciality": "Dermatology",
+    "shift": "afternoon"
 }
 
 ### Get all staff
@@ -48,29 +51,29 @@ POST {{BASE_URL}}/api/appointment
 Content-Type: application/json
 
 {
-    "patientId": 9,
-    "doctorId": 10,
-    "reason": "I have been feeling a pain in my back",
+    "patientId": 13,
+    "doctorId": 15,
+    "reason": "Sleeping disorder",
     "duration": 60
 }
 
 
 ### Get all users appointment
-GET {{BASE_URL}}/api/appointment/users/9
+GET {{BASE_URL}}/api/appointment/users/13
 Content-Type: application/json
 
 ### Get all doctors appointment
 GET {{BASE_URL}}/api/appointment/10
 Content-Type: application/json
 
-### Book an appointment
+### Make payment
 POST {{BASE_URL}}/api/payment
 Content-Type: application/json
 
 {
-    "appointmentId": 18,
+    "appointmentId": 22,
     "amount": 200,
-    "patientId": 10
+    "patientId": 13
 }
 
 
@@ -81,3 +84,16 @@ Content-Type: application/json
 ### Get all user payment
 GET {{BASE_URL}}/api/payment/10
 Content-Type: application/json
+
+### Create medical record
+POST {{BASE_URL}}/api/records
+Content-Type: application/json
+
+{
+  "patientId": 13,
+  "doctorId": 15,
+  "appointmentId": 22,
+  "diagnosis": "Hypertension",
+  "prescription": "Prescribed Lisinopril 10mg",
+  "testResults": "pending"
+}

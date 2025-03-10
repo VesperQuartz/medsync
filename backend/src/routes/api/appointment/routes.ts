@@ -7,7 +7,7 @@ import {
 import { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from "zod";
 
-const appointments: FastifyPluginAsyncZod = async function (fastify, _opts) {
+const appoint: FastifyPluginAsyncZod = async function (fastify, _opts) {
   fastify.route({
     method: "POST",
     url: "/",
@@ -38,11 +38,17 @@ const appointments: FastifyPluginAsyncZod = async function (fastify, _opts) {
     url: "/",
     schema: {
       response: {
-        200: z.array(AppointmentSelectSchema),
+        200: z.array(
+          z.object({
+            appointments: AppointmentSelectSchema.or(z.null()),
+            staff: StaffSelectSchema.or(z.null()),
+            users: UserSelectSchema.or(z.null()),
+          }),
+        ),
       },
     },
     handler: async (_req, _res) => {
-      const appointment = await fastify.AllAppointment.execute();
+      const appointment = await fastify.ShowAllAppointment.execute();
       return appointment;
     },
   });
@@ -92,4 +98,4 @@ const appointments: FastifyPluginAsyncZod = async function (fastify, _opts) {
   });
 };
 
-export default appointments;
+export default appoint;

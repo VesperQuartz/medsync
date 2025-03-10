@@ -16,6 +16,23 @@ const users: FastifyPluginAsyncZod = async function (fastify, _opts) {
       return users;
     },
   });
+  fastify.route({
+    method: "GET",
+    url: "/:id",
+    schema: {
+      params: z.object({
+        id: z.coerce.number(),
+      }),
+      response: {
+        200: UserSelectSchema,
+      },
+    },
+    handler: async (req) => {
+      const { id } = req.params;
+      const users = await fastify.OneUser.execute(id);
+      return users;
+    },
+  });
 };
 
 export default users;

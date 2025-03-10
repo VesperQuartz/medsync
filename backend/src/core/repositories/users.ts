@@ -9,7 +9,8 @@ export type DBInstance = LibSQLDatabase<typeof schema> & {
 };
 
 export interface UserRepository {
-  save(user: User): Promise<User>;
-  findUserByEmail(email: string): Promise<User>;
+  save(user: User): Promise<UserSelectType>;
+  findUserByEmail(email: string): Promise<UserSelectType>;
+  findUserById(id: number): Promise<UserSelectType>;
   findAll(): Promise<UserSelectType[]>;
 }

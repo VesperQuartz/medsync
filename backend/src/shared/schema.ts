@@ -13,8 +13,8 @@ export const UserInsertSchema = createInsertSchema(users, {
   email: (schema) => schema.email(),
   password: (schema) => schema.min(6),
   name: (schema) => schema.min(3),
-  dateOfBirth: z.coerce.date(),
   role: z.enum(["nurse", "doctor", "admin", "patient"]),
+  dateOfBirth: z.coerce.date(),
 });
 export const UserSelectSchemaWithToken = createSelectSchema(users).merge(
   z.object({ token: z.string() }),

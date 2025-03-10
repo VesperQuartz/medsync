@@ -41,9 +41,6 @@ const auth: FastifyPluginAsyncZod = async function (fastify, _opts) {
       const user = await fastify.LoginUser.execute({
         email,
         password,
-        dateOfBirth: new Date(),
-        name: "",
-        role: "",
       });
       return user;
     },

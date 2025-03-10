@@ -1,4 +1,3 @@
-import { User } from "@/core/domain/entities/user/index.js";
 import { AuthService } from "@/core/services/auth.js";
 import { UserRepositoryImpl } from "@/infrastructure/repositories/users.js";
 import { to } from "await-to-ts";
@@ -8,7 +7,7 @@ export class LoginUser {
     private userRepository: UserRepositoryImpl,
     private authService: AuthService,
   ) {}
-  async execute(payload: User) {
+  async execute(payload: { email: string; password: string }) {
     const [error, user] = await to(
       this.userRepository.findUserByEmail(payload.email),
     );

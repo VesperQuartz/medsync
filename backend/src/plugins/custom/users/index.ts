@@ -1,5 +1,6 @@
 import { AllUsers } from "@/application/use-case/user/all-users.js";
 import { CreateUser } from "@/application/use-case/user/create-user.js";
+import { OneUser } from "@/application/use-case/user/one-user.js";
 import { LoginUser } from "@/application/use-case/user/user-login.js";
 import { AuthService } from "@/core/services/auth.js";
 import { UserRepositoryImpl } from "@/infrastructure/repositories/users.js";
@@ -15,10 +16,12 @@ export default fp(
       new AuthService(fastify),
     );
     const allUser = new AllUsers(user);
+    const oneUser = new OneUser(user);
 
     fastify.decorate("LoginUser", login);
     fastify.decorate("RegisterUser", reg);
     fastify.decorate("AllUser", allUser);
+    fastify.decorate("OneUser", oneUser);
   },
   {
     dependencies: ["database"],
@@ -30,5 +33,6 @@ declare module "fastify" {
     RegisterUser: CreateUser;
     LoginUser: LoginUser;
     AllUser: AllUsers;
+    OneUser: OneUser;
   }
 }

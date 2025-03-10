@@ -30,9 +30,31 @@ export class AppointmentRepositoryImpl implements AppointmentRepository {
     const [error, appointment] = await to(
       this.appointmentRepo.db
         .select({ users, appointments })
-        .from(users)
-        .leftJoin(appointments, eq(users.id, appointments.patientId))
+        .from(appointments)
+        .leftJoin(users, eq(users.id, appointments.patientId))
         .where(eq(users.id, id)),
+    );
+    if (error) {
+      throw error;
+    }
+    return appointment;
+  }
+  async findAllOverallAppointment(): Promise<
+    {
+      users: UserSelectType | null;
+      staff: StaffSelectType | null;
+      appointments: AppointmentSelectType | null;
+    }[]
+  > {
+    const [error, appointment] = await to(
+      this.appointmentRepo.db
+        .select({ users, appointments, staff: doctorStaffDetails })
+        .from(appointments)
+        .leftJoin(users, eq(users.id, appointments.patientId))
+        .leftJoin(
+          doctorStaffDetails,
+          eq(doctorStaffDetails.userId, appointments.doctorId),
+        ),
     );
     if (error) {
       throw error;
@@ -44,7 +66,7 @@ export class AppointmentRepositoryImpl implements AppointmentRepository {
     doctorId: number,
     startTime: string,
     duration: number,
-  ): Promise<Appointments[]> {
+  ): Promise<AppointmentSelectType[]> {
     const endTime = sql`DATETIME(${startTime}, '+' || ${duration} || ' minutes')`;
 
     return this.appointmentRepo.db
@@ -87,9 +109,9 @@ export class AppointmentRepositoryImpl implements AppointmentRepository {
     const [error, appointment] = await to(
       this.appointmentRepo.db
         .select({ staff: doctorStaffDetails, appointments })
-        .from(doctorStaffDetails)
+        .from(appointments)
         .leftJoin(
-          appointments,
+          doctorStaffDetails,
           eq(doctorStaffDetails.userId, appointments.doctorId),
         )
         .where(eq(doctorStaffDetails.userId, id)),
@@ -108,9 +130,9 @@ export class AppointmentRepositoryImpl implements AppointmentRepository {
     const [error, appointment] = await to(
       this.appointmentRepo.db
         .select({ staff: doctorStaffDetails, appointments })
-        .from(doctorStaffDetails)
+        .from(appointments)
         .leftJoin(
-          appointments,
+          doctorStaffDetails,
           eq(doctorStaffDetails.userId, appointments.doctorId),
         )
         .where(eq(doctorStaffDetails.userId, id)),

@@ -1,23 +1,33 @@
+import {
+  AppointmentSelectType,
+  StaffSelectType,
+  UserSelectType,
+} from "@/shared/schema.js";
 import { Appointments } from "../domain/entities/appointments/index.js";
-import { Staff } from "../domain/entities/staff/index.js";
-import { User } from "../domain/entities/user/index.js";
 
 export interface AppointmentRepository {
-  save(appointments: Appointments): Promise<Appointments>;
-  findAllAppointment(): Promise<Appointments[]>;
+  save(appointments: Appointments): Promise<AppointmentSelectType>;
+  findAllAppointment(): Promise<AppointmentSelectType[]>;
   findPatientAppointmentById(id: number): Promise<
     {
-      users: User | null;
-      appointments: Appointments | null;
+      users: UserSelectType | null;
+      appointments: AppointmentSelectType | null;
     }[]
   >;
   findDoctorAppointmentById(id: number): Promise<{
-    staff: Staff | null;
-    appointments: Appointments | null;
+    staff: StaffSelectType | null;
+    appointments: AppointmentSelectType | null;
   }>;
   findDoctorAppointmentsInRange(
     doctorId: number,
     startTime: string,
     duration: number,
-  ): Promise<Appointments[]>;
+  ): Promise<AppointmentSelectType[]>;
+  findAllOverallAppointment(): Promise<
+    {
+      users: UserSelectType | null;
+      staff: StaffSelectType | null;
+      appointments: AppointmentSelectType | null;
+    }[]
+  >;
 }

@@ -10,7 +10,13 @@ export class UserRepositoryImpl implements UserRepository {
   constructor(private userRepo: FastifyInstance) {}
   async save(payload: User): Promise<UserSelectType> {
     const [error, user] = await to(
-      this.userRepo.db.insert(users).values(payload).returning(),
+      this.userRepo.db
+        .insert(users)
+        .values({
+          ...payload,
+          dateOfBirth: payload.dateOfBirth.toLocaleString(),
+        })
+        .returning(),
     );
     if (error) {
       throw error;
@@ -20,6 +26,15 @@ export class UserRepositoryImpl implements UserRepository {
   async findUserByEmail(email: string): Promise<UserSelectType> {
     const [error, user] = await to(
       this.userRepo.db.select().from(users).where(eq(users.email, email)),
+    );
+    if (error) {
+      throw error;
+    }
+    return user[0];
+  }
+  async findUserById(id: number): Promise<UserSelectType> {
+    const [error, user] = await to(
+      this.userRepo.db.select().from(users).where(eq(users.id, id)),
     );
     if (error) {
       throw error;
