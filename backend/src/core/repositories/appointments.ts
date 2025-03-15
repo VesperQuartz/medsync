@@ -18,6 +18,7 @@ export interface AppointmentRepository {
     staff: StaffSelectType | null;
     appointments: AppointmentSelectType | null;
   }>;
+  deleteAppointmentById(id: number): void;
   findDoctorAppointmentsInRange(
     doctorId: number,
     startTime: string,

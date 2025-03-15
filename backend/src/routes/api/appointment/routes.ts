@@ -34,6 +34,26 @@ const appoint: FastifyPluginAsyncZod = async function (fastify, _opts) {
     },
   });
   fastify.route({
+    method: "DELETE",
+    url: "/:id",
+    schema: {
+      params: z.object({
+        id: z.coerce.number(),
+      }),
+      response: {
+        200: z.object({
+          message: z.string(),
+        }),
+      },
+    },
+    handler: async (req, _res) => {
+      const { id } = req.params;
+      await fastify.DeleteAppointment.execute(id);
+      return { message: "Appointment deleted" };
+    },
+  });
+
+  fastify.route({
     method: "GET",
     url: "/",
     schema: {

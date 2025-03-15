@@ -12,6 +12,16 @@ import { and, eq, sql } from "drizzle-orm";
 
 export class AppointmentRepositoryImpl implements AppointmentRepository {
   constructor(private appointmentRepo: FastifyInstance) {}
+  async deleteAppointmentById(id: number): Promise<void> {
+    const [error] = await to(
+      this.appointmentRepo.db
+        .delete(appointments)
+        .where(eq(appointments.id, id)),
+    );
+    if (error) {
+      throw error;
+    }
+  }
   async findAllAppointment(): Promise<AppointmentSelectType[]> {
     const [error, appointment] = await to(
       this.appointmentRepo.db.select().from(appointments),
