@@ -71,9 +71,14 @@ const payment: FastifyPluginAsyncZod = async function (fastify, _opts) {
     handler: async (req, _res) => {
       const { amount } = req.body;
       const customer = await fastify.stripe.customers.create();
-      const ephemeralKey = await fastify.stripe.ephemeralKeys.create({
-        customer: customer.id,
-      });
+      const ephemeralKey = await fastify.stripe.ephemeralKeys.create(
+        {
+          customer: customer.id,
+        },
+        {
+          apiVersion: "2022-11-15",
+        },
+      );
 
       const paymentIntent = await fastify.stripe.paymentIntents.create({
         amount: amount * 100,
