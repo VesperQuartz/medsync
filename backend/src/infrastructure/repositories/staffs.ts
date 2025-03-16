@@ -44,9 +44,9 @@ export class StaffRepositoryImpl implements StaffRepository {
           users,
           staff: doctorStaffDetails,
         })
-        .from(users)
-        .leftJoin(doctorStaffDetails, eq(users.id, doctorStaffDetails.userId))
-        .where(eq(doctorStaffDetails.id, id)),
+        .from(doctorStaffDetails)
+        .leftJoin(users, eq(users.id, doctorStaffDetails.userId))
+        .where(eq(doctorStaffDetails.userId, id)),
     );
     if (error) {
       throw error;
