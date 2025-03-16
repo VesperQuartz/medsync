@@ -52,6 +52,44 @@ const payment: FastifyPluginAsyncZod = async function (fastify, _opts) {
       return payment;
     },
   });
+  fastify.route({
+    method: "POST",
+    url: "/stripe",
+    schema: {
+      body: z.object({
+        amount: z.number(),
+      }),
+      response: {
+        200: z.object({
+          paymentIntent: z.string().nullish(),
+          ephemeralKey: z.string().nullish(),
+          customer: z.string(),
+          publicKey: z.string(),
+        }),
+      },
+    },
+    handler: async (req, _res) => {
+      const { amount } = req.body;
+      const customer = await fastify.stripe.customers.create();
+      const ephemeralKey = await fastify.stripe.ephemeralKeys.create({
+        customer: customer.id,
+      });
+
+      const paymentIntent = await fastify.stripe.paymentIntents.create({
+        amount: amount * 100,
+        currency: "usd",
+        customer: customer.id,
+      });
+      const responsePayload = {
+        paymentIntent: paymentIntent.client_secret,
+        ephemeralKey: ephemeralKey.secret,
+        customer: customer.id,
+        publicKey:
+          "pk_test_51MC7WtCe9nNOUvz0iWXgPaz1rvBwyecFJ73jlY3PwH7EqoqT5WR3BoEUiyXY8z4ksDxYhnOS09FfGTLcRUHxSeCN00xsbaOX9G",
+      };
+      return responsePayload;
+    },
+  });
 };
 
 export default payment;

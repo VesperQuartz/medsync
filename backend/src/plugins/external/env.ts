@@ -27,6 +27,9 @@ const schema = {
     REDIS_PASSWORD: {
       type: "string",
     },
+    STRIPE_SECRET: {
+      type: "string",
+    },
   },
 };
 
@@ -59,6 +62,7 @@ declare module "fastify" {
       DATABASE_URL: string;
       DATABASE_TOKEN: string;
       REDIS_PASSWORD: string;
+      STRIPE_SECRET: string;
     };
   }
 }
