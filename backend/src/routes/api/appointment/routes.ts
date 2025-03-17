@@ -52,6 +52,29 @@ const appoint: FastifyPluginAsyncZod = async function (fastify, _opts) {
       return { message: "Appointment deleted" };
     },
   });
+  fastify.route({
+    method: "PATCH",
+    url: "/:id",
+    schema: {
+      params: z.object({
+        id: z.coerce.number(),
+      }),
+      body: z.object({
+        status: z.string(),
+      }),
+      response: {
+        200: z.object({
+          message: z.string(),
+        }),
+      },
+    },
+    handler: async (req, _res) => {
+      const { id } = req.params;
+      const { status } = req.body;
+      await fastify.UpdateStatus.execute(id, status);
+      return { message: "Appointment status updated" };
+    },
+  });
 
   fastify.route({
     method: "GET",
