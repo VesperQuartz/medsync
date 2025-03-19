@@ -67,7 +67,7 @@ MedSync is designed to simplify healthcare processes for both patients and medic
 
   2. Accessing Records:
 
-    - Doctors can easily access a patient’s medical history during follow-up appointments.
+        - Doctors can easily access a patient’s medical history during follow-up appointments.
 
 ## Why you should use medsync
 
