@@ -22,7 +22,7 @@ const WelcomeScreen = () => {
     <OnboardingLayout>
       <View style={styles.container}>
         <View style={styles.imageContainer}>
-          {assets && <Image source={assets[0]} style={styles.image} />}
+          {assets ? <Image source={assets[0]} style={styles.image} /> : null}
         </View>
 
         <View style={styles.textContainer}>
