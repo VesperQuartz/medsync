@@ -15,7 +15,7 @@ const WelcomeScreen = () => {
   const handleStart = () => {
     router.push('/');
   };
-  const [assets] = useAssets([require('../assets/image/doctor.png')]);
+  const [assets] = useAssets([require('../assets/doctor.png')]);
   const onboard = useOnBoardStore();
 
   return (
