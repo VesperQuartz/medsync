@@ -1,9 +1,9 @@
 {
   "expo": {
-    "name": "medsync-app",
-    "slug": "medsync-app",
+    "name": "medsync",
+    "slug": "medsync",
     "version": "1.0.0",
-    "scheme": "medsync-app",
+    "scheme": "medsync",
     "web": {
       "bundler": "metro",
       "output": "static",
@@ -17,7 +17,6 @@
           "launchMode": "most-recent"
         }
       ],
-      "expo-secure-store",
       [
         "expo-asset",
         {
@@ -31,7 +30,6 @@
       "typedRoutes": true,
       "tsconfigPaths": true
     },
-    "newArchEnabled": true,
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -45,7 +43,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.mrlectus.medsyncapp",
+      "bundleIdentifier": "com.mrlectus.medsync",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
@@ -62,8 +60,14 @@
         "origin": false
       },
       "eas": {
-        "projectId": "008696d9-fb52-4167-9054-fc9cacc054b2"
+        "projectId": "c8d9af93-84b6-4533-924e-6569c52ed6b2"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/c8d9af93-84b6-4533-924e-6569c52ed6b2"
     }
   }
 }

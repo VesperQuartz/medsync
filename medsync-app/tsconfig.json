@@ -1,5 +1,11 @@
 {
-  "extends": "expo/tsconfig.base",
+  "extends": [
+    "expo/tsconfig.base",
+    "@react-native/typescript-config/tsconfig.json"
+  ],
+  "exclude": [
+    "__tests__/**/*-test.ts"
+  ],
   "compilerOptions": {
     "strict": true,
     "jsx": "react-jsx",

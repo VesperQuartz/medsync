@@ -2,7 +2,15 @@ import { useQueryClient } from '@tanstack/react-query';
 import { format, formatRelative } from 'date-fns';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
-import { Menu, Bell, User, MoreHorizontal, Calendar, UserRound, Plus } from 'lucide-react-native';
+import {
+  Menu,
+  Bell,
+  User,
+  MoreHorizontal,
+  Calendar,
+  UserRound,
+  Plus,
+} from 'lucide-react-native';
 import { useState } from 'react';
 import {
   View,
@@ -16,7 +24,11 @@ import {
 } from 'react-native';
 
 import { NameText } from '~/components/name';
-import { useCreateAppointment, useDeleteAppointment, useGetRecentAppointment } from '~/hooks/api';
+import {
+  useCreateAppointment,
+  useDeleteAppointment,
+  useGetRecentAppointment,
+} from '~/hooks/api';
 import { useUserStore } from '~/store';
 
 export default function UserPage() {
@@ -64,27 +76,38 @@ export default function UserPage() {
         </View>
       </View>
 
-      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={false}>
         <View style={styles.greeting}>
           <Text style={styles.greetingName}>Hello {user.user?.name}!</Text>
           {appointment.data?.at(0) ? (
             <Text style={styles.greetingMessage}>
               Your have an appointment with{' '}
-              <NameText id={appointment?.data?.at(0)?.appointments?.doctorId!} />{' '}
-              {formatRelative(appointment.data?.[0]?.appointments?.date, new Date())}
+              <NameText id={appointment?.data?.at(0)?.appointments?.doctorId} />
+              {formatRelative(
+                appointment.data?.[0]?.appointments?.date,
+                new Date(),
+              )}
             </Text>
           ) : (
-            <Text style={styles.greetingMessage}>You have no upcoming appointments</Text>
+            <Text style={styles.greetingMessage}>
+              You have no upcoming appointments
+            </Text>
           )}
         </View>
 
         <View style={styles.tabsContainer}>
-          {mainTabs.map((tab) => (
+          {mainTabs.map(tab => (
             <TouchableOpacity
               key={tab}
               style={[styles.tab, activeMainTab === tab && styles.activeTab]}
               onPress={() => handleTabPress(tab)}>
-              <Text style={[styles.tabText, activeMainTab === tab && styles.activeTabText]}>
+              <Text
+                style={[
+                  styles.tabText,
+                  activeMainTab === tab && styles.activeTabText,
+                ]}>
                 {tab}
               </Text>
               {activeMainTab === tab && <View style={styles.tabIndicator} />}
@@ -96,7 +119,8 @@ export default function UserPage() {
           <Text style={styles.sectionTitle}>Coming Up</Text>
           {appointment.data?.length === 0 && (
             <Text className="text-xl">
-              No upcoming appointments please click on the floating icon to add one
+              No upcoming appointments please click on the floating icon to add
+              one
             </Text>
           )}
           {/* {appointment.isLoading && ( */}
@@ -106,95 +130,112 @@ export default function UserPage() {
           {/*     <Skeleton height={150} width={400} colorMode="light" /> */}
           {/*   </View> */}
           {/* )} */}
-          {activeMainTab === 'Appointment' &&
-            appointment.data?.map((app) => {
-              return (
-                <View style={styles.appointmentCardContainer}>
-                  <LinearGradient
-                    colors={['#4285F4', '#2563EB']}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 0 }}
-                    style={styles.gradientCard}>
-                    <View style={styles.appointmentHeader}>
-                      <View style={styles.doctorInfo}>
-                        <Image
-                          source={{ uri: 'https://avatar.iran.liara.run/public' }}
-                          style={styles.doctorAvatar}
-                        />
-                        <NameText className="text-xl text-white" id={app.appointments?.doctorId} />,{' '}
-                        <Text className="font-bold">{app.staff?.speciality}</Text>
+          {activeMainTab === 'Appointment'
+            ? appointment.data?.map(app => {
+                return (
+                  <View
+                    style={styles.appointmentCardContainer}
+                    key={app.appointments.id}>
+                    <LinearGradient
+                      colors={['#4285F4', '#2563EB']}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 0 }}
+                      style={styles.gradientCard}>
+                      <View style={styles.appointmentHeader}>
+                        <View style={styles.doctorInfo}>
+                          <Image
+                            source={{
+                              uri: 'https://avatar.iran.liara.run/public',
+                            }}
+                            style={styles.doctorAvatar}
+                          />
+                          <NameText
+                            className="text-xl text-white"
+                            id={app.appointments?.doctorId}
+                          />
+                          <Text>, </Text>
+                          <Text className="font-bold">
+                            {app.staff?.speciality}
+                          </Text>
+                        </View>
+                        <TouchableOpacity>
+                          <MoreHorizontal size={20} color="#fff" />
+                        </TouchableOpacity>
                       </View>
-                      <TouchableOpacity>
-                        <MoreHorizontal size={20} color="#fff" />
-                      </TouchableOpacity>
-                    </View>
 
-                    <View style={styles.appointmentDetails}>
-                      <View style={styles.detailRow}>
-                        <Calendar size={16} color="#fff" />
-                        <Text style={styles.detailText}>
-                          {format(app.appointments?.date, 'MMMM d, h:mma')}
-                        </Text>
+                      <View style={styles.appointmentDetails}>
+                        <View style={styles.detailRow}>
+                          <Calendar size={16} color="#fff" />
+                          <Text style={styles.detailText}>
+                            {format(app.appointments?.date, 'MMMM d, h:mma')}
+                          </Text>
+                        </View>
+
+                        {/* <View style={styles.detailRow}> */}
+                        {/*   <MapPin size={16} color="#fff" /> */}
+                        {/*   <Text style={styles.detailText}> */}
+                        {/*     {appointments[0].location.building}, {appointments[0].location.room} */}
+                        {/*   </Text> */}
+                        {/* </View> */}
+
+                        <View style={styles.detailRow}>
+                          <UserRound size={16} color="#fff" />
+                          <Text style={styles.detailText}>
+                            {app?.appointments?.reason}
+                          </Text>
+                        </View>
                       </View>
 
-                      {/* <View style={styles.detailRow}> */}
-                      {/*   <MapPin size={16} color="#fff" /> */}
-                      {/*   <Text style={styles.detailText}> */}
-                      {/*     {appointments[0].location.building}, {appointments[0].location.room} */}
-                      {/*   </Text> */}
-                      {/* </View> */}
-
-                      <View style={styles.detailRow}>
-                        <UserRound size={16} color="#fff" />
-                        <Text style={styles.detailText}>{app?.appointments?.reason}</Text>
-                      </View>
-                    </View>
-
-                    <View style={styles.actionButtons}>
-                      <TouchableOpacity
-                        style={styles.actionButton}
-                        onPress={() => {
-                          reschedule.mutate(
-                            {
-                              patientId: app.users.id,
-                              duration: app.appointments.duration,
-                              reason: app.appointments.reason,
-                              doctorId: app.appointments.doctorId,
-                            },
-                            {
-                              onSuccess: () => {
-                                Alert.alert('Appointment has been rescheduled to another time!');
-                                deleteAppointment.mutate(
-                                  { id: app.appointments.id },
-                                  {
-                                    onSettled: () => {
-                                      queryClient.invalidateQueries({
-                                        queryKey: ['appointment-recent'],
-                                      });
+                      <View style={styles.actionButtons}>
+                        <TouchableOpacity
+                          style={styles.actionButton}
+                          onPress={() => {
+                            reschedule.mutate(
+                              {
+                                patientId: app.users.id,
+                                duration: app.appointments.duration,
+                                reason: app.appointments.reason,
+                                doctorId: app.appointments.doctorId,
+                              },
+                              {
+                                onSuccess: () => {
+                                  Alert.alert(
+                                    'Appointment has been rescheduled to another time!',
+                                  );
+                                  deleteAppointment.mutate(
+                                    { id: app.appointments.id },
+                                    {
+                                      onSettled: () => {
+                                        queryClient.invalidateQueries({
+                                          queryKey: ['appointment-recent'],
+                                        });
+                                      },
                                     },
-                                  }
-                                );
-                                queryClient.invalidateQueries({
-                                  queryKey: ['appointment-recent'],
-                                });
+                                  );
+                                  queryClient.invalidateQueries({
+                                    queryKey: ['appointment-recent'],
+                                  });
+                                },
+                                onError: () => {
+                                  Alert.alert('Cannot reschedule appointment');
+                                },
                               },
-                              onError: () => {
-                                Alert.alert('Cannot reschedule appointment');
-                              },
-                            }
-                          );
-                        }}>
-                        <Text style={styles.actionButtonText}>Reschedule</Text>
-                      </TouchableOpacity>
+                            );
+                          }}>
+                          <Text style={styles.actionButtonText}>
+                            Reschedule
+                          </Text>
+                        </TouchableOpacity>
 
-                      {/* <TouchableOpacity style={styles.actionButton}> */}
-                      {/*   <Text style={styles.actionButtonText}>Cancel</Text> */}
-                      {/* </TouchableOpacity> */}
-                    </View>
-                  </LinearGradient>
-                </View>
-              );
-            })}
+                        {/* <TouchableOpacity style={styles.actionButton}> */}
+                        {/*   <Text style={styles.actionButtonText}>Cancel</Text> */}
+                        {/* </TouchableOpacity> */}
+                      </View>
+                    </LinearGradient>
+                  </View>
+                );
+              })
+            : null}
         </View>
       </ScrollView>
 

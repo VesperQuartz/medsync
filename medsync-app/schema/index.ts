@@ -9,7 +9,7 @@ export const loginSchema = z.object({
   }),
   hospitalId: z
     .string()
-    .refine((id) => id === '111111', {
+    .refine(id => id === '111111', {
       message: 'Hospital id is invalid',
     })
     .optional(),
@@ -25,12 +25,15 @@ export const signUpSchema = z.object({
   email: z.string().email({
     message: 'Email is invalid',
   }),
+  speciality: z.string().min(3, {
+    message: 'Speciality must be at least 3 characters long',
+  }),
   dateOfBirth: z.coerce.date({
     required_error: 'Your date of birth is required',
   }),
   hospitalId: z
     .string()
-    .refine((id) => id === '111111', {
+    .refine(id => id === '111111', {
       message: 'Hospital id is invalid',
     })
     .optional(),

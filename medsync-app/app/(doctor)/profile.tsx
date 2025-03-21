@@ -2,7 +2,7 @@ import { useRouter } from 'expo-router';
 import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { SpecialityText } from '~/components/name';
+import { Shifts, SpecialityText } from '~/components/name';
 import { Button } from '~/components/weak-button';
 import Colors from '~/constants/colors';
 import { useUserStore } from '~/store';
@@ -22,6 +22,11 @@ const SettingsPage = () => {
           />
           <Text style={styles.name}>{user.user?.name}</Text>
           <SpecialityText style={styles.role} id={user.user!.id} />
+          <Shifts
+            style={styles.role}
+            id={user.user!.id}
+            className="text-center"
+          />
         </View>
 
         <View style={styles.footer}>

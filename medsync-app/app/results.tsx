@@ -1,5 +1,11 @@
 import { Stack } from 'expo-router';
-import { Search, ChevronDown, ChevronUp, FileText, Pill } from 'lucide-react-native';
+import {
+  Search,
+  ChevronDown,
+  ChevronUp,
+  FileText,
+  Pill,
+} from 'lucide-react-native';
 import { useState } from 'react';
 import {
   View,
@@ -37,7 +43,7 @@ const ResultScreen = () => {
     });
   };
   const user = useUserStore();
-  const record = useGetUserMedicalRecords(user.user!.id);
+  const record = useGetUserMedicalRecords(user.user?.id);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -59,12 +65,17 @@ const ResultScreen = () => {
         </View>
       </View>
       {record.data?.length === 0 && (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{ color: Colors.light.subtleText }}>No records found</Text>
+        <View
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <Text style={{ color: Colors.light.subtleText }}>
+            No records found
+          </Text>
         </View>
       )}
-      <ScrollView style={styles.recordsList} contentContainerStyle={styles.recordsListContent}>
-        {record.data?.map((rec) => (
+      <ScrollView
+        style={styles.recordsList}
+        contentContainerStyle={styles.recordsListContent}>
+        {record.data?.map(rec => (
           <View key={rec.id} style={styles.recordCard}>
             <TouchableOpacity
               style={styles.recordHeader}
@@ -75,7 +86,9 @@ const ResultScreen = () => {
                 </View>
                 <View style={styles.doctorDetails}>
                   <NameText id={rec.doctorId} className="" />
-                  <Text style={styles.recordDate}>{formatDate(rec.createdAt)}</Text>
+                  <Text style={styles.recordDate}>
+                    {formatDate(rec.createdAt)}
+                  </Text>
                 </View>
               </View>
               <View style={styles.specialtyContainer}>
@@ -114,7 +127,9 @@ const ResultScreen = () => {
 
                 <View style={styles.section}>
                   <View style={styles.sectionHeader}>
-                    <View style={[styles.sectionIcon, styles.testResultsIcon]} />
+                    <View
+                      style={[styles.sectionIcon, styles.testResultsIcon]}
+                    />
                     <Text style={styles.sectionTitle}>Test Results</Text>
                   </View>
                   <Text style={styles.sectionContent}>{rec.testResults}</Text>

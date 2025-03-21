@@ -37,7 +37,7 @@ export const login = async ({ email, password }: UserPayload) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ email, password }),
-    })
+    }),
   );
   if (error) {
     console.log(error);
@@ -49,7 +49,13 @@ export const login = async ({ email, password }: UserPayload) => {
   return (await response.json()) as UserResponse;
 };
 
-export const register = async ({ email, password, name, role, dateOfBirth }: UserRegPayload) => {
+export const register = async ({
+  email,
+  password,
+  name,
+  role,
+  dateOfBirth,
+}: UserRegPayload) => {
   const [error, response] = await to(
     fetch(`${env.EXPO_PUBLIC_BASE_URL}/api/auth/register`, {
       method: 'POST',
@@ -57,7 +63,7 @@ export const register = async ({ email, password, name, role, dateOfBirth }: Use
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ email, password, dateOfBirth, role, name }),
-    })
+    }),
   );
   if (error) {
     console.log(error);
@@ -69,8 +75,36 @@ export const register = async ({ email, password, name, role, dateOfBirth }: Use
   return (await response.json()) as UserResponse;
 };
 
+export const addStaff = async ({
+  userId,
+  speciality,
+}: {
+  userId: number;
+  speciality: string;
+}) => {
+  const [error, response] = await to(
+    fetch(`${env.EXPO_PUBLIC_BASE_URL}/api/staff`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ userId, speciality }),
+    }),
+  );
+  if (error) {
+    console.log(error);
+    throw new Error('Failed to create staff');
+  }
+  if (!response.ok) {
+    throw new Error('Invalid credentials');
+  }
+  return await response.json();
+};
+
 export const getAllUser = async () => {
-  const [error, response] = await to(fetch(`${env.EXPO_PUBLIC_BASE_URL}/api/users`));
+  const [error, response] = await to(
+    fetch(`${env.EXPO_PUBLIC_BASE_URL}/api/users`),
+  );
   if (error) {
     throw error;
   }
@@ -80,8 +114,10 @@ export const getAllUser = async () => {
   return (await response.json()) as User[];
 };
 
-export const getUser = async (id: number) => {
-  const [error, response] = await to(fetch(`${env.EXPO_PUBLIC_BASE_URL}/api/users/${id}`));
+export const getUser = async (id: number | undefined) => {
+  const [error, response] = await to(
+    fetch(`${env.EXPO_PUBLIC_BASE_URL}/api/users/${id}`),
+  );
   if (error) {
     throw error;
   }
@@ -92,7 +128,9 @@ export const getUser = async (id: number) => {
 };
 
 export const getAllStaff = async () => {
-  const [error, response] = await to(fetch(`${env.EXPO_PUBLIC_BASE_URL}/api/staff`));
+  const [error, response] = await to(
+    fetch(`${env.EXPO_PUBLIC_BASE_URL}/api/staff`),
+  );
   if (error) {
     throw error;
   }
@@ -103,7 +141,9 @@ export const getAllStaff = async () => {
 };
 
 export const getAllAppointment = async () => {
-  const [error, response] = await to(fetch(`${env.EXPO_PUBLIC_BASE_URL}/api/appointment`));
+  const [error, response] = await to(
+    fetch(`${env.EXPO_PUBLIC_BASE_URL}/api/appointment`),
+  );
   if (error) {
     throw error;
   }
@@ -114,7 +154,9 @@ export const getAllAppointment = async () => {
 };
 
 export const getAllDoctorAppointment = async (id: number) => {
-  const [error, response] = await to(fetch(`${env.EXPO_PUBLIC_BASE_URL}/api/appointment/${id}`));
+  const [error, response] = await to(
+    fetch(`${env.EXPO_PUBLIC_BASE_URL}/api/appointment/${id}`),
+  );
   if (error) {
     throw error;
   }
@@ -135,7 +177,7 @@ export const updateStatus = async (id: number, status: string) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ status }),
-    })
+    }),
   );
   if (error) {
     throw error;
@@ -161,7 +203,7 @@ export const createAppointment = async ({
       headers: {
         'Content-Type': 'application/json',
       },
-    })
+    }),
   );
   if (error) {
     throw error;
@@ -180,7 +222,7 @@ export const deleteAppointment = async ({ id }: { id: number }) => {
       headers: {
         'Content-Type': 'application/json',
       },
-    })
+    }),
   );
   if (error) {
     throw error;
@@ -201,7 +243,7 @@ export const stripePayment = async ({ amount }: { amount: number }) => {
       headers: {
         'Content-Type': 'application/json',
       },
-    })
+    }),
   );
   if (error) {
     throw error;
@@ -215,7 +257,7 @@ export const stripePayment = async ({ amount }: { amount: number }) => {
 
 export const getAllUserAppointment = async (id: number | undefined) => {
   const [error, response] = await to(
-    fetch(`${env.EXPO_PUBLIC_BASE_URL}/api/appointment/users/${id}`)
+    fetch(`${env.EXPO_PUBLIC_BASE_URL}/api/appointment/users/${id}`),
   );
   if (error) {
     throw error;
@@ -227,7 +269,9 @@ export const getAllUserAppointment = async (id: number | undefined) => {
 };
 
 export const getAllPayment = async () => {
-  const [error, response] = await to(fetch(`${env.EXPO_PUBLIC_BASE_URL}/api/payment`));
+  const [error, response] = await to(
+    fetch(`${env.EXPO_PUBLIC_BASE_URL}/api/payment`),
+  );
   if (error) {
     throw error;
   }
@@ -237,7 +281,11 @@ export const getAllPayment = async () => {
   return (await response.json()) as Payment[];
 };
 
-export const makePayment = async ({ patientId, amount, appointmentId }: PaymentPayload) => {
+export const makePayment = async ({
+  patientId,
+  amount,
+  appointmentId,
+}: PaymentPayload) => {
   const [error, response] = await to(
     fetch(`${env.EXPO_PUBLIC_BASE_URL}/api/payment`, {
       method: 'POST',
@@ -245,7 +293,7 @@ export const makePayment = async ({ patientId, amount, appointmentId }: PaymentP
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ patientId, amount, appointmentId }),
-    })
+    }),
   );
   if (error) {
     throw error;
@@ -257,7 +305,9 @@ export const makePayment = async ({ patientId, amount, appointmentId }: PaymentP
 };
 
 export const getAllRecords = async () => {
-  const [error, response] = await to(fetch(`${env.EXPO_PUBLIC_BASE_URL}/api/records`));
+  const [error, response] = await to(
+    fetch(`${env.EXPO_PUBLIC_BASE_URL}/api/records`),
+  );
   if (error) {
     throw error;
   }
@@ -289,7 +339,7 @@ export const createRecord = async ({
         prescription,
         testResults,
       }),
-    })
+    }),
   );
   if (error) {
     throw error;
@@ -300,8 +350,10 @@ export const createRecord = async ({
   return (await response.json()) as MedicalRecord[];
 };
 
-export const getUserRecords = async (id: number) => {
-  const [error, response] = await to(fetch(`${env.EXPO_PUBLIC_BASE_URL}/api/records/${id}`));
+export const getUserRecords = async (id: number | undefined) => {
+  const [error, response] = await to(
+    fetch(`${env.EXPO_PUBLIC_BASE_URL}/api/records/${id}`),
+  );
   if (error) {
     throw error;
   }

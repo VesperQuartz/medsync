@@ -37,26 +37,31 @@ type UserStoreState = {
 
 type AppointmentState = {
   appointment: AppointmentPayload | undefined;
-  saveAppointment: ({ doctorId, reason, duration, patientId }: AppointmentPayload) => void;
+  saveAppointment: ({
+    doctorId,
+    reason,
+    duration,
+    patientId,
+  }: AppointmentPayload) => void;
   removeAppointment: () => void;
 };
 
 export const useOnBoardStore = create<OnBoard>()(
   persist(
-    (set) => ({
+    set => ({
       hasSeen: false,
-      setHasSeen: (by) => set(() => ({ hasSeen: by })),
+      setHasSeen: by => set(() => ({ hasSeen: by })),
     }),
     {
       name: 'onboard',
       storage: createJSONStorage(() => zustandStorage),
-    }
-  )
+    },
+  ),
 );
 
 export const useUserStore = create<UserStoreState>()(
   persist(
-    (set) => ({
+    set => ({
       user: undefined,
       setUser: (user: UserResponse) =>
         set(() => ({
@@ -67,13 +72,13 @@ export const useUserStore = create<UserStoreState>()(
     {
       name: 'user',
       storage: createJSONStorage(() => zustandStorage),
-    }
-  )
+    },
+  ),
 );
 
 export const useAppointmentStore = create<AppointmentState>()(
   persist(
-    (set) => ({
+    set => ({
       appointment: undefined,
       saveAppointment: (appointment: AppointmentPayload) =>
         set(() => ({
@@ -84,6 +89,6 @@ export const useAppointmentStore = create<AppointmentState>()(
     {
       name: 'appointment',
       storage: createJSONStorage(() => zustandStorage),
-    }
-  )
+    },
+  ),
 );

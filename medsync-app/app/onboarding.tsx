@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 import { useAssets } from 'expo-asset';
 import { Image } from 'expo-image';
 import { Link, useRouter } from 'expo-router';
@@ -31,7 +32,9 @@ const WelcomeScreen = () => {
               MED<Text style={styles.brandAccent}>SYNC</Text>
             </Text>
           </Text>
-          <Text style={styles.subtitle}>Your healthcare journey simplified</Text>
+          <Text style={styles.subtitle}>
+            Your healthcare journey simplified
+          </Text>
         </View>
 
         <View style={styles.buttonContainer}>

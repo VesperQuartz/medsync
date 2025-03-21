@@ -74,9 +74,9 @@ const Login = () => {
                 />
               );
             }}
-          />{' '}
-          {form.formState.errors.email && <Text>{form.formState.errors.email.message}</Text>}
-          {role === 'staff' && (
+          />
+          {form.formState.errors.email ? <Text>{form.formState.errors.email.message}</Text> : null}
+          {role === 'staff' ? (
             <>
               <Text style={styles.labelText}>Hospital ID</Text>
               <Controller
@@ -95,11 +95,11 @@ const Login = () => {
                   );
                 }}
               />
-              {form.formState.errors.hospitalId && (
+              {form.formState.errors.hospitalId ? (
                 <Text>{form.formState.errors.hospitalId.message}</Text>
-              )}
+              ) : null}
             </>
-          )}
+          ) : null}
           <Text style={styles.labelText}>Password</Text>
           <Controller
             control={form.control}
@@ -117,7 +117,9 @@ const Login = () => {
               );
             }}
           />
-          {form.formState.errors.password && <Text>{form.formState.errors.password.message}</Text>}
+          {form.formState.errors.password ? (
+            <Text>{form.formState.errors.password.message}</Text>
+          ) : null}
           <TouchableOpacity style={styles.signupButton} onPress={onSubmit}>
             <Text style={styles.signupButtonText}>{login.isPending ? 'Loading...' : 'Login'}</Text>
           </TouchableOpacity>

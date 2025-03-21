@@ -1,6 +1,4 @@
 import '../global.css';
-import 'react-native-reanimated';
-import 'react-native-gesture-handler';
 import {
   focusManager,
   QueryClient,
@@ -14,8 +12,8 @@ import { Platform, AppStateStatus, AppState } from 'react-native';
 
 import { useOnBoardStore } from '~/store';
 
-onlineManager.setEventListener((setOnline) => {
-  const eventSubscription = Network.addNetworkStateListener((state) => {
+onlineManager.setEventListener(setOnline => {
+  const eventSubscription = Network.addNetworkStateListener(state => {
     setOnline(!!state.isConnected);
   });
   return eventSubscription.remove;

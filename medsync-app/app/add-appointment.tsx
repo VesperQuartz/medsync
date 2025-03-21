@@ -1,8 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { zodResolver } from '@hookform/resolvers/zod';
 import { StripeProvider, useStripe } from '@stripe/stripe-react-native';
 import { Stack, useRouter } from 'expo-router';
 import { ArrowLeft, Clock, ChevronDown } from 'lucide-react-native';
-import { Skeleton } from 'moti/skeleton';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import {
@@ -19,7 +19,12 @@ import {
 } from 'react-native';
 import { z } from 'zod';
 
-import { useCreateAppointment, useGetAllDoctor, useMakePayment, useStripePay } from '~/hooks/api';
+import {
+  useCreateAppointment,
+  useGetAllDoctor,
+  useMakePayment,
+  useStripePay,
+} from '~/hooks/api';
 import { useAppointmentStore, useUserStore } from '~/store';
 import { generateCalendarDays } from '~/utils';
 
@@ -56,7 +61,8 @@ const formSchema = z.object({
     })
     .min(3),
 });
-export default function AddAppointmentScreen() {
+
+const AddAppointmentScreen = () => {
   const router = useRouter();
   const doctor = useGetAllDoctor();
   const payment = useMakePayment();
@@ -92,7 +98,7 @@ export default function AddAppointmentScreen() {
           doctorId: booking.appointment!.doctorId,
           duration: booking.appointment?.duration ?? 50,
         },
-        'Payload'
+        'Payload',
       );
       book.mutate(
         {
@@ -102,7 +108,7 @@ export default function AddAppointmentScreen() {
           duration: booking.appointment?.duration ?? 50,
         },
         {
-          onSuccess: (data) => {
+          onSuccess: data => {
             console.log(data, 'After bookment');
             payment.mutate({
               amount: selectedConsultation,
@@ -110,26 +116,29 @@ export default function AddAppointmentScreen() {
               appointmentId: data.id,
             });
             booking.removeAppointment();
-            Alert.alert('Payment successful', 'Your appointment has been confirmed!');
+            Alert.alert(
+              'Payment successful',
+              'Your appointment has been confirmed!',
+            );
             router.push('/(users)');
           },
-          onError: (error) => {
+          onError: error => {
             console.log(error, 'pError');
           },
-        }
+        },
       );
     }
   };
   const pay = useStripePay();
   const user = useUserStore();
 
-  const handleProceedToPayment = form.handleSubmit(async (data) => {
+  const handleProceedToPayment = form.handleSubmit(async data => {
     console.log(selectedConsultation, 'Price');
     console.log(selectedDoctor, 'Doc');
     pay.mutate(
       { amount: selectedConsultation },
       {
-        onSuccess: async (data) => {
+        onSuccess: async data => {
           await initPaymentSheet({
             merchantDisplayName: 'MedSync',
             customerId: data.customer,
@@ -140,7 +149,7 @@ export default function AddAppointmentScreen() {
             },
           });
         },
-      }
+      },
     );
     setShowConfirmation(true);
     booking.saveAppointment({
@@ -167,7 +176,9 @@ export default function AddAppointmentScreen() {
             <Text style={styles.viewDetailsText}>View more details</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.paymentButton} onPress={handleConfirm}>
+          <TouchableOpacity
+            style={styles.paymentButton}
+            onPress={handleConfirm}>
             <Text style={styles.paymentButtonText}>Proceed to Payment</Text>
           </TouchableOpacity>
         </View>
@@ -192,7 +203,9 @@ export default function AddAppointmentScreen() {
           <View style={styles.headerRight} />
         </View>
 
-        <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+        <ScrollView
+          style={styles.scrollView}
+          showsVerticalScrollIndicator={false}>
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
               <Text style={styles.sectionTitle}>Select Doctor</Text>
@@ -205,18 +218,19 @@ export default function AddAppointmentScreen() {
               contentContainerStyle={styles.doctorsContainer}>
               {doctor.isLoading && (
                 <View className="flex flex-row gap-2">
-                  <Skeleton colorMode="light" height={110} width={110} />
-                  <Skeleton colorMode="light" height={110} width={110} />
-                  <Skeleton colorMode="light" height={110} width={110} />
-                  <Skeleton colorMode="light" height={110} width={110} />
+                  {/* <Skeleton colorMode="light" height={110} width={110} /> */}
+                  {/* <Skeleton colorMode="light" height={110} width={110} /> */}
+                  {/* <Skeleton colorMode="light" height={110} width={110} /> */}
+                  {/* <Skeleton colorMode="light" height={110} width={110} /> */}
                 </View>
               )}
-              {doctor.data?.map((doc) => (
+              {doctor.data?.map(doc => (
                 <TouchableOpacity
                   key={doc.users.id}
                   style={[
                     styles.doctorCard,
-                    selectedDoctor === doc.users.id && styles.selectedDoctorCard,
+                    selectedDoctor === doc.users.id &&
+                      styles.selectedDoctorCard,
                   ]}
                   onPress={() => {
                     setSelectedDoctor(doc.users?.id);
@@ -228,7 +242,9 @@ export default function AddAppointmentScreen() {
                       style={styles.doctorAvatar}
                     />
                     <Text style={styles.doctorName}>{doc.users?.name}</Text>
-                    <Text style={styles.doctorSpecialty}>{doc.staff?.speciality}</Text>
+                    <Text style={styles.doctorSpecialty}>
+                      {doc.staff?.speciality}
+                    </Text>
                     <View style={styles.bookButton}>
                       <Text style={styles.bookButtonText}>Book</Text>
                     </View>
@@ -242,12 +258,13 @@ export default function AddAppointmentScreen() {
             <Text style={styles.sectionTitle}>Select consultation type</Text>
 
             <View style={styles.consultationTypesContainer}>
-              {consultationTypes.map((type) => (
+              {consultationTypes.map(type => (
                 <TouchableOpacity
                   key={type.id}
                   style={[
                     styles.consultationType,
-                    selectedConsultation === type!.price && styles.selectedConsultationType,
+                    selectedConsultation === type!.price &&
+                      styles.selectedConsultationType,
                   ]}
                   onPress={() => {
                     setSelectedConsultation(type.price);
@@ -255,19 +272,23 @@ export default function AddAppointmentScreen() {
                   }}>
                   <type.icon
                     size={24}
-                    color={selectedConsultation === type.id ? '#4285F4' : '#666'}
+                    color={
+                      selectedConsultation === type.id ? '#4285F4' : '#666'
+                    }
                   />
                   <Text
                     style={[
                       styles.consultationTypeName,
-                      selectedConsultation === type.id && styles.selectedConsultationText,
+                      selectedConsultation === type.id &&
+                        styles.selectedConsultationText,
                     ]}>
                     {type.name}
                   </Text>
                   <Text
                     style={[
                       styles.consultationTypePrice,
-                      selectedConsultation === type.id && styles.selectedConsultationText,
+                      selectedConsultation === type.id &&
+                        styles.selectedConsultationText,
                     ]}>
                     ${type.price}
                   </Text>
@@ -289,11 +310,22 @@ export default function AddAppointmentScreen() {
               {calendarDays.map((item, index) => (
                 <TouchableOpacity
                   key={index}
-                  style={[styles.calendarDay, item.selected && styles.selectedCalendarDay]}>
-                  <Text style={[styles.dayText, item.selected && styles.selectedDayText]}>
+                  style={[
+                    styles.calendarDay,
+                    item.selected && styles.selectedCalendarDay,
+                  ]}>
+                  <Text
+                    style={[
+                      styles.dayText,
+                      item.selected && styles.selectedDayText,
+                    ]}>
                     {item.day}
                   </Text>
-                  <Text style={[styles.dateText, item.selected && styles.selectedDayText]}>
+                  <Text
+                    style={[
+                      styles.dateText,
+                      item.selected && styles.selectedDayText,
+                    ]}>
                     {item.date}
                   </Text>
                 </TouchableOpacity>
@@ -320,21 +352,25 @@ export default function AddAppointmentScreen() {
                 );
               }}
             />
-            {form.formState.errors.reason && <Text>{form.formState.errors.reason.message}</Text>}
+            {form.formState.errors.reason && (
+              <Text>{form.formState.errors.reason.message}</Text>
+            )}
           </View>
 
           <View style={styles.bottomPadding} />
         </ScrollView>
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.confirmButton} onPress={handleProceedToPayment}>
+          <TouchableOpacity
+            style={styles.confirmButton}
+            onPress={handleProceedToPayment}>
             <Text style={styles.confirmButtonText}>Confirm Appointment</Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
     </StripeProvider>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -579,3 +615,5 @@ const styles = StyleSheet.create({
     padding: 16,
   },
 });
+
+export default AddAppointmentScreen;

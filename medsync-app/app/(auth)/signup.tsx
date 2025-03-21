@@ -18,7 +18,7 @@ import {
 } from 'react-native';
 import { match } from 'ts-pattern';
 
-import { useRegister } from '~/hooks/api';
+import { useAddStaff, useRegister } from '~/hooks/api';
 import { signUpSchema } from '~/schema';
 import { useUserStore } from '~/store';
 
@@ -35,30 +35,43 @@ const Signup = () => {
       email: '',
       dateOfBirth: new Date(),
       password: '',
+      speciality: '',
     },
   });
-  const register = useRegister();
 
-  const onSubmit = form.handleSubmit((data) => {
+  const register = useRegister();
+  const staff = useAddStaff();
+
+  const onSubmit = form.handleSubmit(data => {
     const theRole = role === 'patient' ? 'patient' : 'doctor';
     register.mutate(
       { ...data, role: theRole, dateOfBirth: data.dateOfBirth.toISOString() },
       {
-        onSuccess: (data) => {
-          user.setUser(data);
-          match(data.role)
+        onSuccess: d => {
+          user.setUser(d);
+          match(d.role)
             .with('doctor', () => {
-              router.replace('/(doctor)');
+              staff.mutate(
+                {
+                  userId: d.id,
+                  speciality: data.speciality,
+                },
+                {
+                  onSuccess: () => {
+                    router.replace('/(doctor)');
+                  },
+                },
+              );
             })
             .with('patient', () => {
               router.replace('/(users)');
             })
             .otherwise(() => null);
         },
-        onError: (error) => {
+        onError: error => {
           console.error(error);
         },
-      }
+      },
     );
   });
 
@@ -76,13 +89,19 @@ const Signup = () => {
 
               <View style={styles.toggleContainer}>
                 <TouchableOpacity
-                  style={[styles.toggleButton, role === 'patient' && styles.activeToggle]}
+                  style={[
+                    styles.toggleButton,
+                    role === 'patient' && styles.activeToggle,
+                  ]}
                   onPress={() => setRole('patient')}>
                   <Text style={styles.toggleText}>Patient</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                  style={[styles.toggleButton, role === 'staff' && styles.activeToggle]}
+                  style={[
+                    styles.toggleButton,
+                    role === 'staff' && styles.activeToggle,
+                  ]}
                   onPress={() => setRole('staff')}>
                   <Text style={styles.toggleText}>Staff</Text>
                 </TouchableOpacity>
@@ -104,7 +123,9 @@ const Signup = () => {
                   )}
                 />
                 {form.formState.errors.name && (
-                  <Text style={styles.errorText}>{form.formState.errors.name.message}</Text>
+                  <Text style={styles.errorText}>
+                    {form.formState.errors.name.message}
+                  </Text>
                 )}
 
                 <Text style={styles.labelText}>Email</Text>
@@ -124,7 +145,9 @@ const Signup = () => {
                   )}
                 />
                 {form.formState.errors.email && (
-                  <Text style={styles.errorText}>{form.formState.errors.email.message}</Text>
+                  <Text style={styles.errorText}>
+                    {form.formState.errors.email.message}
+                  </Text>
                 )}
 
                 {role === 'staff' && (
@@ -148,6 +171,27 @@ const Signup = () => {
                         {form.formState.errors.hospitalId.message}
                       </Text>
                     )}
+
+                    <Text style={styles.labelText}>Speciality</Text>
+                    <Controller
+                      control={form.control}
+                      name="speciality"
+                      render={({ field: { value, onBlur, onChange } }) => (
+                        <TextInput
+                          style={styles.input}
+                          value={value}
+                          onBlur={onBlur}
+                          onChangeText={onChange}
+                          placeholder="Enter your speciality"
+                          autoCapitalize="none"
+                        />
+                      )}
+                    />
+                    {form.formState.errors.speciality && (
+                      <Text style={styles.errorText}>
+                        {form.formState.errors.speciality.message}
+                      </Text>
+                    )}
                   </>
                 )}
 
@@ -161,7 +205,9 @@ const Signup = () => {
                         style={styles.dateInput}
                         onPress={() => setShowDatePicker(true)}>
                         <Text style={styles.dateText}>
-                          {value ? value.toLocaleDateString() : 'Select date of birth'}
+                          {value
+                            ? value.toLocaleDateString()
+                            : 'Select date of birth'}
                         </Text>
                       </TouchableOpacity>
 
@@ -169,7 +215,9 @@ const Signup = () => {
                         <DateTimePicker
                           value={value || new Date()}
                           mode="date"
-                          display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+                          display={
+                            Platform.OS === 'ios' ? 'spinner' : 'default'
+                          }
                           onChange={(_event, selectedDate) => {
                             const currentDate = selectedDate || value;
                             setShowDatePicker(Platform.OS === 'ios');
@@ -181,7 +229,9 @@ const Signup = () => {
                   )}
                 />
                 {form.formState.errors.dateOfBirth && (
-                  <Text style={styles.errorText}>{form.formState.errors.dateOfBirth.message}</Text>
+                  <Text style={styles.errorText}>
+                    {form.formState.errors.dateOfBirth.message}
+                  </Text>
                 )}
 
                 <Text style={styles.labelText}>Password</Text>
@@ -201,17 +251,25 @@ const Signup = () => {
                 />
 
                 {form.formState.errors.password && (
-                  <Text style={styles.errorText}>{form.formState.errors.password.message}</Text>
+                  <Text style={styles.errorText}>
+                    {form.formState.errors.password.message}
+                  </Text>
                 )}
 
-                <TouchableOpacity style={styles.signupButton} onPress={onSubmit}>
+                <TouchableOpacity
+                  style={styles.signupButton}
+                  onPress={onSubmit}>
                   <Text style={styles.signupButtonText}>
-                    {register.isPending ? 'Loading...' : 'Register'}
+                    {register.isPending || staff.isPending
+                      ? 'Loading...'
+                      : 'Register'}
                   </Text>
                 </TouchableOpacity>
 
                 <View style={styles.loginContainer}>
-                  <Text style={styles.loginText}>Already have an account? </Text>
+                  <Text style={styles.loginText}>
+                    Already have an account?{' '}
+                  </Text>
                   <Link href="/(auth)/login" asChild>
                     <TouchableOpacity>
                       <Text style={styles.loginLink}>Log In</Text>
