@@ -21,7 +21,7 @@
         "expo-asset",
         {
           "assets": [
-            "./assets/image/doctor.png"
+            "./assets/doctor.png"
           ]
         }
       ]
