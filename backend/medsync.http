@@ -1,13 +1,13 @@
 ### Register a user
-POST {{BASE_URL}}/api/auth/register
+POST https://medsync-9a76abebef65.herokuapp.com/api/auth/register
 Content-Type: application/json
 
 {
     "name": "Super Admin",
-    "dateOfBirth": "1984-04-06T00:00:00.000Z",
+    "dateOfBirth": "1982-01-06T00:00:00.000Z",
     "password": "password",
     "role": "admin",
-    "email": "example+admin@gmail.com"
+    "email": "admin@gmail.com"
 }
 
 ### Login a user

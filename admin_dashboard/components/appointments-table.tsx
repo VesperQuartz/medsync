@@ -94,7 +94,7 @@ export const columns: ColumnDef<AllAppointment>[] = [
     cell: ({ row }) => {
       return (
         <div className="font-medium text-blue-600">
-          <Name id={row.original.users.id} />
+          <Name id={row.original.staff.userId} />
         </div>
       );
     },

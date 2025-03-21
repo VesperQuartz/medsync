@@ -139,7 +139,7 @@ export const columns: ColumnDef<MedicalRecord>[] = [
   },
   {
     accessorKey: "type",
-    header: "Record Type",
+    header: "Prescription",
     cell: ({ row }) => {
       const type = row.original.prescription;
       const badgeVariants = {

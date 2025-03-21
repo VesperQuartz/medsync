@@ -109,18 +109,26 @@ const AddAppointmentScreen = () => {
         },
         {
           onSuccess: data => {
-            console.log(data, 'After bookment');
-            payment.mutate({
-              amount: selectedConsultation,
-              patientId: booking.appointment!.patientId,
-              appointmentId: data.id,
-            });
-            booking.removeAppointment();
-            Alert.alert(
-              'Payment successful',
-              'Your appointment has been confirmed!',
+            payment.mutate(
+              {
+                amount: selectedConsultation,
+                patientId: booking.appointment!.patientId,
+                appointmentId: data.id,
+              },
+              {
+                onSuccess: () => {
+                  booking.removeAppointment();
+                  Alert.alert(
+                    'Payment successful',
+                    'Your appointment has been confirmed!',
+                  );
+                  router.push('/(users)');
+                },
+                onError: () => {
+                  Alert.alert('Payment error!');
+                },
+              },
             );
-            router.push('/(users)');
           },
           onError: error => {
             console.log(error, 'pError');
@@ -129,6 +137,7 @@ const AddAppointmentScreen = () => {
       );
     }
   };
+
   const pay = useStripePay();
   const user = useUserStore();
 
@@ -151,6 +160,7 @@ const AddAppointmentScreen = () => {
         },
       },
     );
+
     setShowConfirmation(true);
     booking.saveAppointment({
       doctorId: doctorId!,
