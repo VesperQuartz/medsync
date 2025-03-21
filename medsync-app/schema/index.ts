@@ -26,10 +26,13 @@ export const signUpSchema = z.object({
     message: 'Email is invalid',
   }),
   speciality: z
-    .string()
-    .min(3, {
-      message: 'Speciality must be at least 3 characters long',
-    })
+    .union([
+      z.string().min(3, {
+        message: 'Speciality must be at least 3 characters long',
+      }),
+      z.literal(''),
+    ])
+    .transform(value => (value === '' ? undefined : value))
     .optional(),
   dateOfBirth: z.coerce.date({
     required_error: 'Your date of birth is required',

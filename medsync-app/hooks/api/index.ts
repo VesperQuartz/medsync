@@ -55,7 +55,7 @@ export const useAddStaff = () => {
       speciality,
     }: {
       userId: number;
-      speciality: string;
+      speciality: string | undefined;
     }) => addStaff({ userId, speciality }),
   });
 };

@@ -80,7 +80,7 @@ export const addStaff = async ({
   speciality,
 }: {
   userId: number;
-  speciality: string;
+  speciality: string | undefined;
 }) => {
   const [error, response] = await to(
     fetch(`${env.EXPO_PUBLIC_BASE_URL}/api/staff`, {

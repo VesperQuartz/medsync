@@ -54,7 +54,7 @@ const Signup = () => {
               staff.mutate(
                 {
                   userId: d.id,
-                  speciality: data.speciality,
+                  speciality: data?.speciality,
                 },
                 {
                   onSuccess: () => {
