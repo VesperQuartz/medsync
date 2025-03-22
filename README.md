@@ -85,4 +85,4 @@ MedSync is designed to simplify healthcare processes for both patients and medic
 
 ## Why you should use medsync
 
-MedSync simplifies healthcare by offering seamless appointment booking, automated staff scheduling, secure medical records, and instant notifications. It saves time, enhances transparency, and improves communication, making healthcare management efficient and stress-free for both patients and medical professionals.
+MedSync simplifies healthcare by offering seamless appointment booking, automated staff scheduling, secure medical records. It saves time, enhances transparency, and improves communication, making healthcare management efficient and stress-free for both patients and medical professionals.
