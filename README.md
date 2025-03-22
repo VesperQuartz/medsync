@@ -11,6 +11,16 @@ For doctors and medical staff, the app provides powerful tools to manage schedul
 
 https://github.com/user-attachments/assets/876345f0-3e62-442d-ba71-eaaaed936dfd
 
+Admin dashboard URL: [MedSync](https://medsync-pi.vercel.app/)
+
+Login credentials
+```json
+{
+   "email": "admin@gmail.com",
+   "password": "password",
+   "Hospital Code" "111111"
+}
+```
 
 ## How it works
 
