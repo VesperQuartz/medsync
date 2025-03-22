@@ -8,6 +8,10 @@ For patients, the app offers a hassle free way to register, book appointments, a
 
 For doctors and medical staff, the app provides powerful tools to manage schedules, view patient appointments, and access medical records securely. The automated staff scheduling feature ensures optimal shift management.
 
+
+https://github.com/user-attachments/assets/876345f0-3e62-442d-ba71-eaaaed936dfd
+
+
 ## How it works
 
 MedSync is designed to simplify healthcare processes for both patients and medical staff. Here’s a step by step breakdown of how the app works:
