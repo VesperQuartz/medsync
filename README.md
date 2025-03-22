@@ -18,7 +18,7 @@ Login credentials
 {
    "email": "admin@gmail.com",
    "password": "password",
-   "Hospital Code" "111111"
+   "Hospital Code": "111111"
 }
 ```
 
